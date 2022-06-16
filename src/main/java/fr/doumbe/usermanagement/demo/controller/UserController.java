@@ -75,12 +75,12 @@ public class UserController {
 
     /**
      * used to find user associated to username in database
-     * @param id refers to the user id to search for
+     * @param id refers to the name of the user to find
      * @return ResponseEntity<User>
      */
     @ApiOperation(value = "used to find user id associated to username in database")
-    @GetMapping("/search/{id}")
-    //@GetMapping("/{id}")
+    //@GetMapping("/search/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Optional<User>> getUserById(@PathVariable("id") Long id) {
         long time = System.currentTimeMillis();
         logger.info("### starting getUserByUsername ... ###");
@@ -129,4 +129,12 @@ public class UserController {
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
+    @ApiOperation(value = "used to add user in database")
+    @DeleteMapping("/search/{id}")
+    public void deleteUserById(@PathVariable String id) {
+        User user = userService.deleteUserById(Long.valueOf(id));
+        if (user == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+    }
 }
