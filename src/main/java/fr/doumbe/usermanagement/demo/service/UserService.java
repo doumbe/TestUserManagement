@@ -2,7 +2,7 @@ package fr.doumbe.usermanagement.demo.service;
 
 import fr.doumbe.usermanagement.demo.dao.UserDAO;
 import fr.doumbe.usermanagement.demo.entity.User;
-import fr.doumbe.usermanagement.demo.rule.UserRule;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,14 +11,10 @@ import java.util.Optional;
 
 @Service
 public class UserService {
-
+    @Autowired
     private final UserDAO userDAO;
-
-    private final UserRule userRule;
-
-    public UserService(UserDAO userDAO, UserRule userRule) {
+    public UserService(UserDAO userDAO) {
         this.userDAO = userDAO;
-        this.userRule = userRule;
     }
 
     /**
@@ -55,9 +51,25 @@ public class UserService {
         return userDAO.save(user);
     }
 
+    /**
+     *
+     * @param id
+     * @return delete user in database
+     */
     @Transactional
     public User deleteUserById(Long id) {
         userDAO.deleteById(id);
         return null;
     }
+    @Transactional
+    public User deleteById(String id) {
+        userDAO.deleteById(id);
+        return null;
+    }
+
+/*
+    @Override
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        return new MyUserDetails(s);
+    } */
 }

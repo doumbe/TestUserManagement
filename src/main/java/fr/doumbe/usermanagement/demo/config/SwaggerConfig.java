@@ -15,7 +15,7 @@ public class SwaggerConfig {
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("fr.doumbe.traore.usermanagement.demo.controller"))
+                .apis(RequestHandlerSelectors.basePackage("fr.doumbe.usermanagement.demo.controller"))
                 .paths(PathSelectors.any())
                 .build();
     }

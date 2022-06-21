@@ -1,36 +1,35 @@
 package fr.doumbe.usermanagement.demo.entity;
 
+import lombok.Builder;
+
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
-
 @Entity
 @Table(name = "User")
 public class User {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "s_user")
-    @SequenceGenerator(name = "s_user")
+   // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "s_user")
+    //@SequenceGenerator(name = "s_user")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     @Size(min = 2)
     @Column(name = "username", nullable = false, unique = true)
     private String username;
 
     @Column(name = "birthdate", nullable = false)
     private LocalDate birthdate;
-
     @Size(min = 2)
     @Column(name = "country", nullable = false)
     private String country;
-
     @Column(name = "phoneNumber")
     private Long phoneNumber;
-
     @Size(min = 1)
     @Column(name = "genre")
     private String genre;
-
+    private String password;
+    private boolean active;
+    private String roles;
     public Long getId() {
         return id;
     }
@@ -80,5 +79,29 @@ public class User {
     }
 
     public void setPhoneNumber(String s, long setPhoneNumber) {
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public String getRoles() {
+        return roles;
+    }
+
+    public void setRoles(String roles) {
+        this.roles = roles;
     }
 }

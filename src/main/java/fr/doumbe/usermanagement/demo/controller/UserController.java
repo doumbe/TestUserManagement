@@ -9,6 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,12 +23,12 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
+//@RequestMapping("/")
 @Api( description="API for the CRUD of users")
 
 public class UserController {
-
     private final Logger logger = LoggerFactory.getLogger(UserController.class);
-
+    @Autowired
     private final UserService userService;
     private final UserRule userRule;
 
@@ -46,7 +47,8 @@ public class UserController {
      * @return list of all users in database
      */
     @ApiOperation(value = "list of all users in database")
-    @RequestMapping(value = "users", method = RequestMethod.GET)
+    @GetMapping("/users")
+    //@RequestMapping(value = "users", method = RequestMethod.GET)
     public ResponseEntity<List<User>> getAllUsers() {
         List<User> users = userService.getAllUser();
         return ResponseEntity.ok().body(users);
@@ -129,12 +131,39 @@ public class UserController {
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
-    @ApiOperation(value = "used to add user in database")
+    @ApiOperation(value = "used to research user in database")
     @DeleteMapping("/search/{id}")
     public void deleteUserById(@PathVariable String id) {
-        User user = userService.deleteUserById(Long.valueOf(id));
-        if (user == null) {
+        //User user = userService.deleteUserById(Long.valueOf(id));
+        if (userService.deleteUserById(Long.valueOf(id)) == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
+    }
+    @ApiOperation(value = "used to research user in database")
+    @DeleteMapping("/{id}")
+    @ResponseStatus(code = HttpStatus.OK)
+    public void deleteById(@PathVariable("id") String id) {
+        if (userService.deleteById(id) == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        userService.deleteById(id);
+    }
+
+    @ApiOperation(value = "home page access")
+    @GetMapping("/home")
+    public String home() {
+        return ("<h1>Welcome Home</h1>");
+    }
+
+    @ApiOperation(value = "used to access the database as an administrator")
+    @GetMapping("/api/user")
+    public String user() {
+        return ("<h1>Welcome User</h1>");
+    }
+
+    @ApiOperation(value = "used to access the database as an administrator")
+    @GetMapping("/admin")
+    public String admin() {
+        return ("<h1>Welcome Admin</h1>");
     }
 }
