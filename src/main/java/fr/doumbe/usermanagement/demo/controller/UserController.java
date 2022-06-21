@@ -28,6 +28,7 @@ import java.util.Optional;
 
 public class UserController {
     private final Logger logger = LoggerFactory.getLogger(UserController.class);
+    //Logger logger = LoggerFactory.getLogger(UserController.class.getName());
     @Autowired
     private final UserService userService;
     private final UserRule userRule;
@@ -54,6 +55,19 @@ public class UserController {
         return ResponseEntity.ok().body(users);
     }
 
+    public Map<String, Object> getUsersByPage(@RequestParam (name = "page", defaultValue = "0")
+                                              int page,
+                                              @RequestParam (name = "size", defaultValue = "5")
+                                              int size) {
+        long time = System.currentTimeMillis();
+        logger.info("### starting getUserByPage ... ###");
+
+        Map<String, Object> result = userService.getUserByPage(page,size);
+        time = System.currentTimeMillis() - time;
+        logger.info("### Ending GetUsersByLastName ..., time : {} ###", time);
+        return result;
+    }
+
     /**
      * used to find user associated to username in database
      * @param username refers to the name of the user to find
@@ -65,6 +79,21 @@ public class UserController {
         long time = System.currentTimeMillis();
         logger.info("### starting getUserByUsername ... ###");
         User user = userService.getUserByUsername(username);
+        if (user != null) {
+            time = System.currentTimeMillis() - time;
+            logger.info("### Ending GetUsersByLastName ..., time : {} ###", time);
+            return ResponseEntity.ok().body(user);
+        }
+        time = System.currentTimeMillis() - time;
+        logger.info("### Ending GetUsersByLastName ..., time : {} ###", time);
+        throw new SearchUserException("User not found");
+    }
+
+    @GetMapping("/search/{lastname}")
+    public ResponseEntity<User> getByLastName(@PathVariable String lastname) {
+        long time = System.currentTimeMillis();
+        logger.info("### starting getUserByLastName ... ###");
+        User user = userService.getUserByLastName(lastname);
         if (user != null) {
             time = System.currentTimeMillis() - time;
             logger.info("### Ending GetUsersByLastName ..., time : {} ###", time);

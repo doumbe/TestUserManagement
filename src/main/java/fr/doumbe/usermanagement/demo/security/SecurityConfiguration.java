@@ -9,9 +9,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @EnableWebSecurity
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
     @Autowired
     UserDetailsService userDetailsService;
 
@@ -23,13 +24,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     // Permission for developed APIs
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http.csrf().disable().authorizeRequests()
                 .antMatchers("/admin").hasRole("ADMIN")
                 .antMatchers("/user").hasAnyRole("ADMIN", "USER")
                 .antMatchers("/addUser").hasAnyRole("USER")
                 //.antMatchers("/search/{id}").hasAnyRole("USER")
                 .antMatchers("/").permitAll()
                 .and().formLogin();
+
     }
 
     // Password encoder

@@ -17,6 +17,10 @@ public class User {
     @Column(name = "username", nullable = false, unique = true)
     private String username;
 
+    @Size(min = 2)
+    @Column(name = "lastname", nullable = false, unique = true)
+    private String lastName;
+
     @Column(name = "birthdate", nullable = false)
     private LocalDate birthdate;
     @Size(min = 2)
@@ -44,6 +48,14 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public LocalDate getBirthdate() {

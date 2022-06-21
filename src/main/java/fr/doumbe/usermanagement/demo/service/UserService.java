@@ -3,10 +3,14 @@ package fr.doumbe.usermanagement.demo.service;
 import fr.doumbe.usermanagement.demo.dao.UserDAO;
 import fr.doumbe.usermanagement.demo.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -65,6 +69,20 @@ public class UserService {
     public User deleteById(String id) {
         userDAO.deleteById(id);
         return null;
+    }
+    public Map<String, Object> getUserByPage(int page, int size) {
+        Map<String, Object> result = new HashMap<>();
+        PageRequest pageable = PageRequest.of(page, size);
+        Page<User> userPage = userDAO.findAll(pageable);
+        result.put("data", userPage.getContent());
+        result.put("Total_of_pages", userPage.getTotalPages());
+        result.put("Total_of_elements", userPage.getTotalElements());
+        result.put("Current_page", userPage.getNumber());
+        return result;
+    }
+
+    public User getUserByLastName(String lastname) {
+        return userDAO.findByLastName(lastname);
     }
 
 /*
