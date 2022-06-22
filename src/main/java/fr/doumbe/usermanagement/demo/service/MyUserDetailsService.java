@@ -1,5 +1,5 @@
 package fr.doumbe.usermanagement.demo.service;
-
+/*
 import fr.doumbe.usermanagement.demo.dao.UserDAO;
 import fr.doumbe.usermanagement.demo.entity.MyUserDetails;
 import fr.doumbe.usermanagement.demo.entity.User;
@@ -23,3 +23,4 @@ public class MyUserDetailsService implements UserDetailsService {
         return user.map(MyUserDetails::new).get();
     }
 }
+*/

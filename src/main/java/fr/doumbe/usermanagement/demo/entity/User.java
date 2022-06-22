@@ -1,7 +1,5 @@
 package fr.doumbe.usermanagement.demo.entity;
 
-import lombok.Builder;
-
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
@@ -9,8 +7,6 @@ import java.time.LocalDate;
 @Table(name = "User")
 public class User {
     @Id
-   // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "s_user")
-    //@SequenceGenerator(name = "s_user")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Size(min = 2)
@@ -18,10 +14,10 @@ public class User {
     private String username;
 
     @Size(min = 2)
-    @Column(name = "lastname", nullable = false, unique = true)
+    @Column(name = "lastName", nullable = false, unique = true)
     private String lastName;
 
-    @Column(name = "birthdate", nullable = false)
+    @Column(name = "birthdate")
     private LocalDate birthdate;
     @Size(min = 2)
     @Column(name = "country", nullable = false)

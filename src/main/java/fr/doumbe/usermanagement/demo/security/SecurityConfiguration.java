@@ -1,5 +1,5 @@
 package fr.doumbe.usermanagement.demo.security;
-
+/*
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -40,3 +40,5 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
         return NoOpPasswordEncoder.getInstance();
     }
 }
+
+ */

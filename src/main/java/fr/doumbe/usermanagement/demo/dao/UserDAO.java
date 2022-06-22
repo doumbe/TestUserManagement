@@ -9,14 +9,8 @@ import java.util.Optional;
 
 @Repository
 public interface UserDAO extends JpaRepository<User, Long> {
-
-    //Optional<User> finByUsername(String username);
     User findByUsername(String username);
-    //Optional<User> findById(String id);
     Optional<User> findUserById(String id);
-    User deleteUserById(Long id);
-    void deleteById(String id);
-
     User findByLastName(String lastname);
 }
 

@@ -66,9 +66,8 @@ public class UserService {
         return null;
     }
     @Transactional
-    public User deleteById(String id) {
+    public void deleteById(Long id) {
         userDAO.deleteById(id);
-        return null;
     }
     public Map<String, Object> getUserByPage(int page, int size) {
         Map<String, Object> result = new HashMap<>();
@@ -85,9 +84,4 @@ public class UserService {
         return userDAO.findByLastName(lastname);
     }
 
-/*
-    @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        return new MyUserDetails(s);
-    } */
 }
